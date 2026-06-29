@@ -363,6 +363,17 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 14px; padding: 28px 24px;
     }
+
+    .t-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.15);
+      border: 1px solid rgba(245,166,35,0.3);
+      color: var(--gold);
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 10px; letter-spacing: 0.3px;
+    }
+
     .stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
     .testimonial-card p {
       font-size: 15px; color: rgba(255,255,255,0.78);
@@ -435,6 +446,49 @@
       font-size: 13px; color: rgba(255,255,255,0.35);
     }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+
+    /* ── CAROUSEL ── */
+    .carousel-outer {
+      position: relative; display: flex; align-items: center; gap: 16px;
+    }
+    .carousel-viewport {
+      overflow: hidden; width: 100%; border-radius: 14px;
+    }
+    .carousel-track {
+      display: flex; gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+    .carousel-track .testimonial-card {
+      min-width: calc(33.333% - 16px);
+      flex-shrink: 0;
+    }
+    .carousel-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(245,166,35,0.15);
+      border: 1.5px solid rgba(245,166,35,0.35);
+      color: var(--gold); font-size: 18px; cursor: pointer;
+      flex-shrink: 0; transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-btn:hover { background: rgba(245,166,35,0.3); }
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 24px;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: background 0.2s, transform 0.2s; border: none;
+    }
+    .carousel-dot.active {
+      background: var(--gold); transform: scale(1.3);
+    }
+    @media (max-width: 900px) {
+      #demo > div { grid-template-columns: 1fr !important; }
+
+      .carousel-track .testimonial-card { min-width: calc(100% - 0px); }
+    }
 
     /* ── WHATSAPP FLOAT ── */
     .whatsapp-float {
@@ -524,7 +578,7 @@
     <li><a href="#testimonials">Success Stories</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#" class="nav-cta" onclick="openModal()">Free Counselling</a>
+  <a href="#demo" class="nav-cta" style="margin-right:8px; background:transparent; border:1.5px solid var(--gold); color:var(--gold);">Free Demo</a><a href="#" class="nav-cta" onclick="openModal()">Free Counselling</a>
   <div class="hamburger" onclick="openMobileMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -571,6 +625,7 @@
         <span class="badge">📋 Resume Building</span>
         <span class="badge">💼 Job Assistance</span>
         <span class="badge">🤝 Small Batches</span>
+        <a href="#demo" class="badge" style="background:var(--gold); color:var(--navy); font-weight:700; text-decoration:none; cursor:pointer;">🎯 Attend Free Demo</a>
       </div>
     </div>
 
@@ -791,40 +846,253 @@
   <div class="testimonials-inner">
     <div class="section-label">Success Stories</div>
     <h2 class="section-title">Real People. <span class="accent">Real Results.</span></h2>
-    <p class="section-sub">Here's what our students say after completing the program and landing their dream roles.</p>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p>"I was a banking operations executive with zero IT experience. After BridgeIT Academy's BA program, I landed a Business Analyst role at a leading BFSI firm within 60 days. The domain-specific training was a game changer."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar" style="background:#fef6e4; color:#D4891A;">P</div>
-          <div class="author-info">
-            <strong>Priya M.</strong>
-            <span>Business Analyst — BFSI Firm, Hyderabad</span>
+    <p class="section-sub">Here's what our students say about Madhav's training and how it transformed their careers.</p>
+
+    <!-- TRAINER SPOTLIGHT -->
+    <div style="background:rgba(245,166,35,0.08); border:1px solid rgba(245,166,35,0.25); border-radius:16px; padding:24px 28px; margin-bottom:40px; display:flex; align-items:center; gap:20px; max-width:600px;">
+      <div style="width:56px; height:56px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:800; font-size:24px; color:var(--navy); flex-shrink:0;">M</div>
+      <div>
+        <div style="font-size:16px; font-weight:700; color:#fff; margin-bottom:4px;">Madhav Dasari</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.65);">Senior BA &amp; Scrum Master • 8+ Years Industry Experience</div>
+        <div style="font-size:13px; color:var(--gold); margin-top:4px;">Healthcare • BFSI • Retail • E-Commerce</div>
+      </div>
+    </div>
+
+    <!-- CAROUSEL WRAPPER -->
+    <div class="carousel-outer">
+      <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)">&#8592;</button>
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+
+          <div class="testimonial-card">
+            <div class="t-badge">Sales (CRM) → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"I spent 5 years in CRM sales and thought IT was out of reach. Madhav showed me how my client-handling and requirement-gathering skills were already BA skills! Landed a BA role in just 55 days."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#fef6e4;color:#D4891A;">R</div>
+              <div class="author-info"><strong>Rohit S.</strong><span>Business Analyst — SaaS Company, Hyderabad</span></div>
+            </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Insurance Sales → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"Coming from insurance sales, I knew the BFSI domain well but had no IT knowledge. Madhav bridged that gap perfectly — he mapped my policy knowledge to user stories and BRDs. Got placed as a BA in an insurance tech firm!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f0fa;color:#2D6A9F;">L</div>
+              <div class="author-info"><strong>Lakshmi P.</strong><span>Business Analyst — InsurTech, Chennai</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Customer Service → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"I worked in customer support for 6 years and always felt stuck. Madhav helped me see that understanding customer pain points IS business analysis. Within 2 months I transitioned to a BA role with a 60% salary jump!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f8f0;color:#27AE60;">M</div>
+              <div class="author-info"><strong>Meera V.</strong><span>Business Analyst — IT Services, Bengaluru</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">BA → Scrum Master</div>
+            <div class="stars">★★★★★</div>
+            <p>"I was already a BA for 3 years but wanted to move into Agile leadership. Madhav's Scrum Master course was the perfect next step. The sprint simulations and stakeholder conflict role plays were incredibly real. Got promoted within 3 months!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#fef6e4;color:#D4891A;">A</div>
+              <div class="author-info"><strong>Arjun T.</strong><span>Scrum Master — Product Firm, Hyderabad</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Banking Ops → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"I was a banking operations executive with zero IT experience. Madhav's domain-specific training mapped my banking knowledge directly to BA skills. Landed a BA role at a BFSI firm within 60 days!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f0fa;color:#2D6A9F;">P</div>
+              <div class="author-info"><strong>Priya M.</strong><span>Business Analyst — BFSI Firm, Hyderabad</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Teacher → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"I was a school teacher and everyone said IT was impossible for me. Madhav believed in me, connected my communication and problem-solving skills to BA concepts, and within 3 months I was working as a BA at an EdTech company!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f8f0;color:#27AE60;">D</div>
+              <div class="author-info"><strong>Deepika S.</strong><span>Business Analyst — EdTech Company, Chennai</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Fresh Graduate → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"As a fresh graduate with no idea about IT, Madhav gave me real project scenarios, JIRA practice, and intense mock interviews. His personal attention in small batches made all the difference. Placed in 50 days!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#fef6e4;color:#D4891A;">S</div>
+              <div class="author-info"><strong>Sneha T.</strong><span>Junior BA — IT Services, Pune</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Retail → Senior BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"Madhav's SQL and Power BI sessions were gold. I came from a retail background and never touched databases. Now I'm creating dashboards daily and got a 40% salary hike within 6 months of joining!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f0fa;color:#2D6A9F;">V</div>
+              <div class="author-info"><strong>Vikram P.</strong><span>Senior BA — Retail IT, Mumbai</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Scrum Master → Product Owner</div>
+            <div class="stars">★★★★★</div>
+            <p>"After Madhav's BA training I became a Scrum Master, and his coaching didn't stop there. He helped me build a Product Owner portfolio and crack a PO interview at a top product company. Best mentor I've had!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f8f0;color:#27AE60;">K</div>
+              <div class="author-info"><strong>Karthik N.</strong><span>Product Owner — FinTech Product Co., Bengaluru</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Healthcare Ops → Healthcare BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"Madhav's Healthcare IT knowledge is exceptional. He taught HL7, FHIR and EHR concepts with real examples. I transitioned from hospital operations to a Healthcare BA role at a US-based firm — completely remote!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#fef6e4;color:#D4891A;">N</div>
+              <div class="author-info"><strong>Navya K.</strong><span>Healthcare BA — US Healthcare Firm, Remote</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">MBA Career Gap → PM</div>
+            <div class="stars">★★★★★</div>
+            <p>"I had a 4-year career gap after my MBA and felt unemployable. Madhav not only trained me in Project Management but coached me on addressing the gap confidently in interviews. Hired as a PM in 2 months!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f0fa;color:#2D6A9F;">K</div>
+              <div class="author-info"><strong>Kiran M.</strong><span>Project Manager — IT Consulting, Hyderabad</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Logistics → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"I worked in logistics operations for 7 years. Madhav helped me position my supply chain knowledge as a massive asset for E-Commerce BA roles. Got placed at a logistics tech startup and absolutely love my new career!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f8f0;color:#27AE60;">G</div>
+              <div class="author-info"><strong>Ganesh R.</strong><span>Business Analyst — Logistics Tech, Mumbai</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">HR → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"As an HR professional, I thought I was too far from IT. Madhav showed me how HR workflows, process documentation and stakeholder management translate perfectly to BA. Transitioned in under 3 months!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#fef6e4;color:#D4891A;">S</div>
+              <div class="author-info"><strong>Sangeetha K.</strong><span>Business Analyst — HR Tech, Hyderabad</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Developer → Scrum Master</div>
+            <div class="stars">★★★★★</div>
+            <p>"I was a developer who wanted to step back from coding and lead teams. Madhav's Scrum Master course gave me the framework, confidence and certification I needed. Now leading 3 agile teams at a product company!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f0fa;color:#2D6A9F;">R</div>
+              <div class="author-info"><strong>Rajesh M.</strong><span>Scrum Master — Product Company, Hyderabad</span></div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-badge">Accountant → BA</div>
+            <div class="stars">★★★★★</div>
+            <p>"10 years in accounting felt like a dead end. Madhav showed me how my financial domain knowledge is a goldmine for BFSI BA roles. I didn't just get a job — I got a senior BA role with my accounting experience fully leveraged!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:#e8f8f0;color:#27AE60;">T</div>
+              <div class="author-info"><strong>Tejaswi B.</strong><span>Senior BA — Banking IT, Hyderabad</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p>"The Scrum Master course was incredibly practical. The mock sprint sessions and real-world case studies made all the difference. I cleared my CSM certification on the first attempt and got promoted within 3 months."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar" style="background:#e8f0fa; color:#2D6A9F;">R</div>
-          <div class="author-info">
-            <strong>Rahul K.</strong>
-            <span>Scrum Master — Product Company, Bengaluru</span>
-          </div>
-        </div>
+      <button class="carousel-btn carousel-next" onclick="moveCarousel(1)">&#8594;</button>
+    </div>
+
+    <!-- DOTS -->
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <!-- STATS BAR -->
+    <div style="display:flex; justify-content:center; gap:48px; margin-top:48px; flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">8+</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Years Industry Experience</div>
       </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p>"As a fresh graduate, I didn't know where to start. BridgeIT Academy helped me build a resume, understand JIRA, and gave me real project scenarios to talk about in interviews. Got placed in 45 days!"</p>
-        <div class="testimonial-author">
-          <div class="author-avatar" style="background:#e8f8f0; color:#27AE60;">S</div>
-          <div class="author-info">
-            <strong>Sneha T.</strong>
-            <span>Junior BA — IT Services Company, Pune</span>
-          </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">3</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Industry Courses</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">4</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Domains Covered</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">Live</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Online Sessions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTEND DEMO -->
+<section style="background:#f0f4f8; padding:80px 5%;" id="demo">
+  <div style="max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div>
+      <div class="section-label" style="color:var(--blue);">Free Demo Class</div>
+      <h2 class="section-title" style="color:var(--navy);">Experience BridgeIT<br><span style="color:var(--blue);">Before You Enroll</span></h2>
+      <p style="font-size:16px; color:#5a6a7a; line-height:1.7; margin-bottom:24px;">Not sure if this is right for you? Attend a <b>FREE live demo session</b> with Madhav and experience the teaching style, course depth, and energy firsthand — zero commitment.</p>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+        <li style="display:flex; gap:10px; font-size:14px; color:#4a5568;"><span style="color:var(--gold); font-weight:700; flex-shrink:0;">✓</span> Live session with real BA/PM case studies</li>
+        <li style="display:flex; gap:10px; font-size:14px; color:#4a5568;"><span style="color:var(--gold); font-weight:700; flex-shrink:0;">✓</span> Ask Madhav anything — career path, salary, timeline</li>
+        <li style="display:flex; gap:10px; font-size:14px; color:#4a5568;"><span style="color:var(--gold); font-weight:700; flex-shrink:0;">✓</span> See if your background qualifies for a BA/PM role</li>
+        <li style="display:flex; gap:10px; font-size:14px; color:#4a5568;"><span style="color:var(--gold); font-weight:700; flex-shrink:0;">✓</span> 100% free, no pressure, no commitment</li>
+      </ul>
+    </div>
+    <div style="background:#fff; border-radius:16px; padding:36px 32px; box-shadow:0 8px 32px rgba(10,22,40,0.1); position:relative;">
+      <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--blue)); border-radius:16px 16px 0 0;"></div>
+      <h3 style="font-family:'Playfair Display',serif; font-size:20px; color:var(--navy); margin-bottom:6px;">Register for Free Demo</h3>
+      <p style="font-size:13px; color:#9AA5B4; margin-bottom:20px;">Fill the form — we'll send you the demo link instantly on WhatsApp.</p>
+      <div id="demoFormContent">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="d-name" placeholder="Your full name" />
         </div>
+        <div class="form-group">
+          <label>WhatsApp Number *</label>
+          <input type="tel" id="d-phone" placeholder="+91 98765 43210" />
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="d-email" placeholder="you@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Which demo are you interested in? *</label>
+          <select id="d-course">
+            <option value="">— Select —</option>
+            <option>Business Analysis Demo</option>
+            <option>Scrum Master / Agile Demo</option>
+            <option>Project Management Demo</option>
+          </select>
+        </div>
+        <button class="btn-submit" onclick="submitDemoForm()" style="background:linear-gradient(135deg,var(--blue),#1a5a9f);">
+          Get My Free Demo Link →
+        </button>
+        <p class="form-note" style="margin-top:10px;">🔒 Your demo link will be sent on WhatsApp within <span>2 hours</span>.</p>
+      </div>
+      <div class="success-state" id="demoSuccess">
+        <div class="success-icon">🎉</div>
+        <h4 style="font-family:'Playfair Display',serif; font-size:20px; color:var(--navy); margin-bottom:8px;">You're Registered!</h4>
+        <p style="font-size:14px; color:#9AA5B4;">Madhav will send your demo link on WhatsApp within 2 hours. See you at the demo!</p>
       </div>
     </div>
   </div>
@@ -848,7 +1116,7 @@
       <div class="footer-brand">
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:18px;color:var(--navy);">B</div>
-          <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;">Tech<span style="color:var(--gold);">Bridge</span> Academy</span>
+          <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;">Bridge<span style="color:var(--gold);">IT</span> Academy</span>
         </div>
         <p>Bridge Your Gap. Enter IT.<br>Hyderabad's #1 IT career training institute — built for non-IT professionals, freshers and IT pros.</p>
       </div>
@@ -1058,6 +1326,80 @@
       msg.textContent = 'Please fill in all required fields.';
       setTimeout(() => msg && msg.remove(), 3000);
     }
+  }
+
+
+  // ── CAROUSEL ──
+  const track    = document.getElementById('carouselTrack');
+  const dotsEl   = document.getElementById('carouselDots');
+  const cards    = track ? track.querySelectorAll('.testimonial-card') : [];
+  let current    = 0;
+  let perView    = window.innerWidth <= 900 ? 1 : 3;
+  let total      = Math.ceil(cards.length / perView);
+  let autoTimer;
+
+  function buildDots() {
+    if (!dotsEl) return;
+    dotsEl.innerHTML = '';
+    total = Math.ceil(cards.length / perView);
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === current ? ' active' : '');
+      d.onclick = () => goTo(i);
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function goTo(index) {
+    current = (index + total) % total;
+    const cardWidth = cards[0] ? cards[0].offsetWidth + 24 : 0;
+    track.style.transform = 'translateX(-' + (current * perView * cardWidth) + 'px)';
+    document.querySelectorAll('.carousel-dot').forEach((d,i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function moveCarousel(dir) {
+    clearInterval(autoTimer);
+    goTo(current + dir);
+    startAuto();
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(() => goTo(current + 1), 4000);
+  }
+
+  window.addEventListener('resize', () => {
+    perView = window.innerWidth <= 900 ? 1 : 3;
+    current = 0;
+    buildDots();
+    goTo(0);
+  });
+
+  if (track) { buildDots(); startAuto(); }
+
+
+  // DEMO FORM SUBMIT
+  async function submitDemoForm() {
+    const name   = document.getElementById('d-name').value.trim();
+    const phone  = document.getElementById('d-phone').value.trim();
+    const email  = document.getElementById('d-email').value.trim();
+    const course = document.getElementById('d-course').value;
+
+    if (!name || !phone || !email || !course) {
+      shakeInvalid(['d-name','d-phone','d-email','d-course'], { name, phone, email, course });
+      return;
+    }
+
+    const btn = document.querySelector('#demoFormContent .btn-submit');
+    setButtonLoading(btn, true);
+
+    try {
+      await sendToSheet({ name, phone, email, course, background: '', source: 'Demo Registration' });
+    } catch(e) {}
+
+    document.getElementById('demoFormContent').style.display = 'none';
+    document.getElementById('demoSuccess').style.display = 'block';
   }
 
   // SMOOTH SCROLL for anchor links
