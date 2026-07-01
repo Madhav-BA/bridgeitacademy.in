@@ -34,10 +34,13 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: rgba(10,22,40,0.97);
       backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      padding: 0 4%;
       height: 68px;
       border-bottom: 1px solid rgba(245,166,35,0.2);
+      gap: 24px;
     }
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
@@ -59,7 +62,8 @@
     }
     .nav-logo-text span { color: var(--gold); }
     .nav-links {
-      display: flex; gap: 32px; list-style: none;
+      display: flex; gap: 28px; list-style: none;
+      justify-content: center; align-items: center;
     }
     .nav-links a {
       color: rgba(255,255,255,0.8);
@@ -74,6 +78,7 @@
       text-decoration: none; transition: background 0.2s;
     }
     .nav-cta:hover { background: var(--gold-dark); }
+    .nav-cta-group { display: flex; align-items: center; gap: 10px; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: 0.3s; }
 
@@ -450,19 +455,23 @@
 
     /* ── CAROUSEL ── */
     .carousel-outer {
-      position: relative; display: flex; align-items: center; gap: 16px;
+      position: relative; display: flex; align-items: center; gap: 12px;
     }
     .carousel-viewport {
       overflow: hidden; width: 100%; border-radius: 14px;
     }
     .carousel-track {
-      display: flex; gap: 24px;
+      display: flex;
       transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
       will-change: transform;
+      padding: 4px 2px;
     }
     .carousel-track .testimonial-card {
-      min-width: calc(33.333% - 16px);
-      flex-shrink: 0;
+      width: 33.333%;
+      flex: 0 0 33.333%;
+      box-sizing: border-box;
+      padding-right: 24px;
+      background-clip: padding-box;
     }
     .carousel-btn {
       width: 44px; height: 44px; border-radius: 50%;
@@ -487,7 +496,7 @@
     @media (max-width: 900px) {
       #demo > div { grid-template-columns: 1fr !important; }
 
-      .carousel-track .testimonial-card { min-width: calc(100% - 0px); }
+      .carousel-track .testimonial-card { width: 100%; flex: 0 0 100%; padding-right: 0; }
     }
 
     /* ── WHATSAPP FLOAT ── */
@@ -536,8 +545,9 @@
       .lead-card { max-width: 480px; }
       .why-grid, .courses-grid, .for-whom-grid, .testimonials-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, .nav-cta-group { display: none; }
       .hamburger { display: flex; }
+      nav { grid-template-columns: 1fr auto; }
       .hero-stats { flex-wrap: wrap; gap: 20px; }
     }
     @media (max-width: 600px) {
@@ -576,9 +586,13 @@
     <li><a href="#courses">Courses</a></li>
     <li><a href="#for-whom">Who Is This For</a></li>
     <li><a href="#testimonials">Success Stories</a></li>
+    <li><a href="#demo">Free Demo</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#demo" class="nav-cta" style="margin-right:8px; background:transparent; border:1.5px solid var(--gold); color:var(--gold);">Free Demo</a><a href="#" class="nav-cta" onclick="openModal()">Free Counselling</a>
+  <div class="nav-cta-group">
+    <a href="#demo" class="nav-cta" style="background:transparent; border:1.5px solid var(--gold); color:var(--gold);">Free Demo</a>
+    <a href="#" class="nav-cta" onclick="openModal()">Free Counselling</a>
+  </div>
   <div class="hamburger" onclick="openMobileMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -598,7 +612,7 @@
 <section class="hero" id="home">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-eyebrow">Now Enrolling — Non-IT &amp; Freshers Welcome</div>
+      <div class="hero-eyebrow">✦ IT &nbsp;|&nbsp; Non-IT &nbsp;|&nbsp; Freshers &nbsp;— Now Enrolling</div>
       <h1>
         <span class="accent">Bridge Your Gap.</span><br>
         Enter IT.<br>Own Your Career.
@@ -606,20 +620,7 @@
       <p class="hero-sub">
         No IT background? No problem. BridgeIT Academy trains non-IT professionals, freshers and IT pros in Business Analysis, Scrum Master &amp; Project Management — with real job assistance till you land the role.
       </p>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Careers Transformed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">3</div>
-          <div class="stat-label">Industry Courses</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">95%</div>
-          <div class="stat-label">Placement Rate</div>
-        </div>
-      </div>
+
       <div class="hero-badges">
         <span class="badge">🎯 Live Online Sessions</span>
         <span class="badge">📋 Resume Building</span>
@@ -853,7 +854,7 @@
       <div style="width:56px; height:56px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:800; font-size:24px; color:var(--navy); flex-shrink:0;">M</div>
       <div>
         <div style="font-size:16px; font-weight:700; color:#fff; margin-bottom:4px;">Madhav Dasari</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.65);">Senior BA &amp; Scrum Master • 8+ Years Industry Experience</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.65);">Senior BA &amp; Scrum Master • 12+ Years Industry Experience</div>
         <div style="font-size:13px; color:var(--gold); margin-top:4px;">Healthcare • BFSI • Retail • E-Commerce</div>
       </div>
     </div>
@@ -1025,16 +1026,12 @@
     <!-- STATS BAR -->
     <div style="display:flex; justify-content:center; gap:48px; margin-top:48px; flex-wrap:wrap;">
       <div style="text-align:center;">
-        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">8+</div>
+        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">12+</div>
         <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Years Industry Experience</div>
       </div>
       <div style="text-align:center;">
         <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">3</div>
         <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Industry Courses</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">4</div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Domains Covered</div>
       </div>
       <div style="text-align:center;">
         <div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--gold);">Live</div>
@@ -1332,28 +1329,32 @@
   // ── CAROUSEL ──
   const track    = document.getElementById('carouselTrack');
   const dotsEl   = document.getElementById('carouselDots');
-  const cards    = track ? track.querySelectorAll('.testimonial-card') : [];
+  const cards    = track ? Array.from(track.querySelectorAll('.testimonial-card')) : [];
   let current    = 0;
   let perView    = window.innerWidth <= 900 ? 1 : 3;
-  let total      = Math.ceil(cards.length / perView);
   let autoTimer;
+
+  function maxIndex() {
+    return Math.max(cards.length - perView, 0);
+  }
 
   function buildDots() {
     if (!dotsEl) return;
     dotsEl.innerHTML = '';
-    total = Math.ceil(cards.length / perView);
-    for (let i = 0; i < total; i++) {
+    const steps = maxIndex() + 1;
+    for (let i = 0; i < steps; i++) {
       const d = document.createElement('button');
       d.className = 'carousel-dot' + (i === current ? ' active' : '');
-      d.onclick = () => goTo(i);
+      d.onclick = () => { clearInterval(autoTimer); goTo(i); startAuto(); };
       dotsEl.appendChild(d);
     }
   }
 
   function goTo(index) {
-    current = (index + total) % total;
-    const cardWidth = cards[0] ? cards[0].offsetWidth + 24 : 0;
-    track.style.transform = 'translateX(-' + (current * perView * cardWidth) + 'px)';
+    const top = maxIndex();
+    current = ((index % (top + 1)) + (top + 1)) % (top + 1);
+    const pct = (100 / perView) * current;
+    track.style.transform = 'translateX(-' + pct + '%)';
     document.querySelectorAll('.carousel-dot').forEach((d,i) => {
       d.classList.toggle('active', i === current);
     });
@@ -1369,14 +1370,17 @@
     autoTimer = setInterval(() => goTo(current + 1), 4000);
   }
 
-  window.addEventListener('resize', () => {
+  function recalcCarousel() {
     perView = window.innerWidth <= 900 ? 1 : 3;
     current = 0;
     buildDots();
     goTo(0);
-  });
+  }
 
-  if (track) { buildDots(); startAuto(); }
+  window.addEventListener('resize', recalcCarousel);
+
+  if (track) { recalcCarousel(); startAuto(); }
+
 
 
   // DEMO FORM SUBMIT
