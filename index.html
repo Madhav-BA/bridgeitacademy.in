@@ -87,7 +87,7 @@
       min-height: 100vh;
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a3a5c 100%);
       display: flex; align-items: center;
-      padding: 100px 5% 80px;
+      padding: 68px 5% 60px;
       position: relative; overflow: hidden;
     }
     .hero::before {
@@ -499,6 +499,50 @@
       .carousel-track .testimonial-card { width: 100%; flex: 0 0 100%; padding-right: 0; }
     }
 
+
+    /* ── COUNTDOWN ── */
+    .countdown-bar {
+      background: linear-gradient(135deg, #1a3a5c, #0d2137);
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 12px; padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .countdown-label {
+      font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .countdown-label::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: #4CAF50; display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    .countdown-units {
+      display: flex; gap: 10px; align-items: center;
+    }
+    .countdown-unit {
+      text-align: center;
+    }
+    .countdown-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--gold);
+      line-height: 1; display: block;
+    }
+    .countdown-tag {
+      font-size: 10px; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .countdown-sep {
+      font-size: 20px; color: var(--gold); font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .seats-badge {
+      background: rgba(229,62,62,0.15);
+      border: 1px solid rgba(229,62,62,0.35);
+      color: #fc8181; font-size: 12px; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+    }
+
     /* ── WHATSAPP FLOAT ── */
     .whatsapp-float {
       position: fixed; bottom: 28px; right: 28px; z-index: 200;
@@ -510,6 +554,27 @@
     }
     .whatsapp-float:hover { transform: scale(1.08); }
     .whatsapp-float svg { width: 28px; height: 28px; fill: #fff; }
+
+
+    /* ── SOCIAL PROOF POPUP ── */
+    .sp-popup {
+      position: fixed; bottom: 100px; left: 24px; z-index: 150;
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(10,22,40,0.18);
+      padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+      max-width: 300px; border-left: 4px solid #25D366;
+      transform: translateX(-120%);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .sp-popup.show { transform: translateX(0); }
+    .sp-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; flex-shrink: 0;
+    }
+    .sp-text strong { display: block; font-size: 13px; color: #1C2B3A; }
+    .sp-text span { font-size: 12px; color: #9AA5B4; }
+    .sp-time { font-size: 11px; color: #9AA5B4; margin-top: 2px; display: block; }
 
     /* ── MODAL ── */
     .modal-overlay {
@@ -632,6 +697,22 @@
 
     <!-- LEAD FORM -->
     <div class="lead-card" id="heroForm">
+      <div class="countdown-bar">
+        <div>
+          <div class="countdown-label">Next batch starting in</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:3px;">Weekend batch · 10AM–12PM IST</div>
+        </div>
+        <div class="countdown-units">
+          <div class="countdown-unit"><span class="countdown-num" id="cd-days">05</span><span class="countdown-tag">Days</span></div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-hrs">14</span><span class="countdown-tag">Hrs</span></div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-min">22</span><span class="countdown-tag">Min</span></div>
+          <span class="countdown-sep">:</span>
+          <div class="countdown-unit"><span class="countdown-num" id="cd-sec">10</span><span class="countdown-tag">Sec</span></div>
+        </div>
+        <div class="seats-badge">🔥 Only 4 seats left</div>
+      </div>
       <h3>Start Your Free Counselling</h3>
       <p>Talk to our career advisor — completely free, no commitment.</p>
       <div id="formContent">
@@ -1041,6 +1122,299 @@
   </div>
 </section>
 
+<!-- HIRING COMPANIES -->
+<section style="background:var(--navy); padding:60px 5%;" id="companies">
+  <div style="max-width:1200px; margin:0 auto; text-align:center;">
+    <div class="section-label" style="text-align:center; margin-bottom:12px;">Our Students Work At</div>
+    <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:#fff; margin-bottom:8px;">Placed Across <span style="color:var(--gold);">Top Companies</span></h2>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); margin-bottom:44px;">BridgeIT Academy students have gone on to work at some of India's most respected IT companies.</p>
+
+    <style>
+      .logo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-bottom:40px; }
+      .logo-card {
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:12px; padding:20px 16px;
+        display:flex; flex-direction:column;
+        align-items:center; justify-content:center;
+        gap:10px; transition:border-color 0.2s, background 0.2s;
+        cursor:default;
+      }
+      .logo-card:hover {
+        border-color:rgba(245,166,35,0.45);
+        background:rgba(255,255,255,0.09);
+      }
+      .logo-card img {
+        height:36px; width:auto; max-width:100px;
+        object-fit:contain;
+        filter: brightness(0) invert(1);
+        opacity:0.85;
+        transition: opacity 0.2s;
+      }
+      .logo-card:hover img { opacity:1; }
+      .logo-card span {
+        font-size:11px; color:rgba(255,255,255,0.4);
+        font-weight:500; letter-spacing:0.3px;
+      }
+      @media(max-width:900px) {
+        .logo-grid { grid-template-columns:repeat(3,1fr); }
+      }
+      @media(max-width:600px) {
+        .logo-grid { grid-template-columns:repeat(2,1fr); }
+      }
+    </style>
+
+    <div class="logo-grid">
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" alt="TCS" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>TCS</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Infosys</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" alt="Wipro" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Wipro</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Accenture</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Capgemini_Logo.svg" alt="Capgemini" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Capgemini</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/HCL_Technologies_official_logo.svg" alt="HCL" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>HCL</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Cognizant_logo.svg" alt="Cognizant" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Cognizant</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Tech_Mahindra_New_Logo.svg" alt="Tech Mahindra" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Tech Mahindra</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Mphasis_logo.svg" alt="Mphasis" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>Mphasis</span>
+      </div>
+
+      <div class="logo-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/EXL_Service_logo.svg" alt="EXL Service" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span>EXL Service</span>
+      </div>
+
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--gold);">10+</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55);">Hiring Partners</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--gold);">PAN India</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55);">Students Placed</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--gold);">Remote</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.55);">Roles Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SALARY TRANSFORMATION -->
+<section style="background:#fff; padding:80px 5%;" id="salary">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:52px;">
+      <div class="section-label" style="color:var(--blue); text-align:center;">Real Results</div>
+      <h2 class="section-title" style="color:var(--navy); text-align:center;">The Salary <span style="color:var(--blue);">Transformation</span></h2>
+      <p style="font-size:16px; color:#5a6a7a; max-width:520px; margin:0 auto;">Real numbers from real students. Your background is not a barrier — it's your biggest asset.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#2D6A9F,#5B9BD5);"></div>
+        <div style="font-size:11px; font-weight:700; color:#2D6A9F; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#2D6A9F;display:inline-block;flex-shrink:0;"></span>
+          Insurance Sales → BA
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹4.5 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Insurance Sales</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹10 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Business Analyst</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 122% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 55 days</span>
+        </div>
+      </div>
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#F5A623,#F5C842);"></div>
+        <div style="font-size:11px; font-weight:700; color:#D4891A; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#D4891A;display:inline-block;flex-shrink:0;"></span>
+          Customer Service → BA
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹3.8 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Customer Support</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹10 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Business Analyst</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 163% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 60 days</span>
+        </div>
+      </div>
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#27AE60,#56D992);"></div>
+        <div style="font-size:11px; font-weight:700; color:#27AE60; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#27AE60;display:inline-block;flex-shrink:0;"></span>
+          Banking Ops → Senior BA
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹6.5 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Banking Operations</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹15 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Senior BA</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 131% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 45 days</span>
+        </div>
+      </div>
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#8B5CF6,#A78BFA);"></div>
+        <div style="font-size:11px; font-weight:700; color:#8B5CF6; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#8B5CF6;display:inline-block;flex-shrink:0;"></span>
+          IT Dev → BA/Scrum Master
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹8 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Software Developer</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹18 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">BA + Scrum Master</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 125% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 3 months</span>
+        </div>
+      </div>
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#E53E3E,#FC8181);"></div>
+        <div style="font-size:11px; font-weight:700; color:#E53E3E; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#E53E3E;display:inline-block;flex-shrink:0;"></span>
+          Sales CRM → Senior BA
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹10 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">CRM Sales Manager</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹22 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Senior BA</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 120% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 75 days</span>
+        </div>
+      </div>
+
+      <div style="background:#f8faff; border:1.5px solid #e8ecf0; border-radius:16px; padding:28px 24px; position:relative; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 12px 32px rgba(10,22,40,0.12)'" onmouseout="this.style.boxShadow='none'">
+        <div style="position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#0694A2,#0ED7B5);"></div>
+        <div style="font-size:11px; font-weight:700; color:#0694A2; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:18px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#0694A2;display:inline-block;flex-shrink:0;"></span>
+          Senior BA → Product Owner
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="text-align:center; flex:1; background:#fff5f5; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">Before</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#e53e3e;">₹12 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Senior BA</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px; flex-shrink:0;">
+            <div style="font-size:20px; color:var(--gold); font-weight:700; line-height:1;">→</div>
+          </div>
+          <div style="text-align:center; flex:1; background:#f0faf4; border-radius:10px; padding:12px 8px;">
+            <div style="font-size:11px; color:#9AA5B4; margin-bottom:4px; font-weight:500;">After</div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#27AE60;">₹28 LPA</div>
+            <div style="font-size:11px; color:#9AA5B4; margin-top:4px;">Product Owner</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#27AE60; font-weight:700;">↑ 133% hike</span>
+          <span style="font-size:12px; color:#9AA5B4; font-weight:500;">in 4 months</span>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center; margin-top:36px; padding:20px; background:#f8faff; border-radius:12px; border:1px dashed #e8ecf0;">
+      <p style="font-size:14px; color:#5a6a7a; margin-bottom:4px;">💡 <b>Your salary potential depends on your experience, domain, and role.</b></p>
+      <p style="font-size:13px; color:#9AA5B4;">*Salary figures are based on actual student outcomes. Individual results may vary. Speak to our advisor for a personalised salary estimate.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ATTEND DEMO -->
 <section style="background:#f0f4f8; padding:80px 5%;" id="demo">
   <div style="max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
@@ -1159,6 +1533,17 @@
   </svg>
 </a>
 
+<!-- SOCIAL PROOF POPUP -->
+<div class="sp-popup" id="spPopup">
+  <div class="sp-avatar" id="spAvatar"></div>
+  <div class="sp-text">
+    <strong id="spName"></strong>
+    <span id="spAction"></span>
+    <span class="sp-time" id="spTime"></span>
+  </div>
+</div>
+
+
 <!-- ENQUIRY MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -1200,6 +1585,76 @@
 </div>
 
 <script>
+
+  // ── COUNTDOWN TIMER ──
+  (function() {
+    // Set next batch date — change this to your actual batch start date
+    const batchDate = new Date();
+    batchDate.setDate(batchDate.getDate() + 5);
+    batchDate.setHours(10, 0, 0, 0);
+
+    function updateCountdown() {
+      const now  = new Date();
+      const diff = batchDate - now;
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hrs').textContent  = '00';
+        document.getElementById('cd-min').textContent  = '00';
+        document.getElementById('cd-sec').textContent  = '00';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+      document.getElementById('cd-hrs').textContent  = String(h).padStart(2,'0');
+      document.getElementById('cd-min').textContent  = String(m).padStart(2,'0');
+      document.getElementById('cd-sec').textContent  = String(s).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  })();
+
+  // ── SOCIAL PROOF POPUP ──
+  (function() {
+    const proofs = [
+      { name: 'Priya M., Hyderabad',    action: 'just registered for BA Demo',        color: '#fef6e4', text: '#D4891A', init: 'P' },
+      { name: 'Rahul K., Bengaluru',    action: 'enrolled in Scrum Master course',     color: '#e8f0fa', text: '#2D6A9F', init: 'R' },
+      { name: 'Sneha T., Chennai',      action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'S' },
+      { name: 'Arjun M., Hyderabad',    action: 'just registered for PM Demo',         color: '#fef6e4', text: '#D4891A', init: 'A' },
+      { name: 'Meera V., Mumbai',       action: 'enrolled in Business Analysis course',color: '#e8f0fa', text: '#2D6A9F', init: 'M' },
+      { name: 'Vikram P., Pune',        action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'V' },
+      { name: 'Deepika S., Delhi',      action: 'just registered for BA Demo',         color: '#fef6e4', text: '#D4891A', init: 'D' },
+      { name: 'Karthik N., Bengaluru',  action: 'enrolled in Scrum Master course',     color: '#e8f0fa', text: '#2D6A9F', init: 'K' },
+      { name: 'Lakshmi P., Hyderabad',  action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'L' },
+      { name: 'Rohit S., Hyderabad',    action: 'just registered for PM Demo',         color: '#fef6e4', text: '#D4891A', init: 'R' },
+    ];
+
+    const times = ['Just now', '2 min ago', '5 min ago', '8 min ago', '12 min ago'];
+    let idx = 0;
+
+    function showProof() {
+      const p   = proofs[idx % proofs.length];
+      const pop = document.getElementById('spPopup');
+      if (!pop) return;
+
+      document.getElementById('spAvatar').textContent    = p.init;
+      document.getElementById('spAvatar').style.background = p.color;
+      document.getElementById('spAvatar').style.color    = p.text;
+      document.getElementById('spName').textContent      = p.name;
+      document.getElementById('spAction').textContent    = p.action;
+      document.getElementById('spTime').textContent      = times[idx % times.length];
+
+      pop.classList.add('show');
+      setTimeout(() => pop.classList.remove('show'), 4000);
+      idx++;
+    }
+
+    // Start after 5 seconds, then every 12 seconds
+    setTimeout(() => { showProof(); setInterval(showProof, 12000); }, 5000);
+  })();
+
   // MODAL
   function openModal(course) {
     document.getElementById('modalOverlay').classList.add('active');
@@ -1272,6 +1727,7 @@
     document.getElementById('formContent').style.display = 'none';
     document.getElementById('heroSuccess').style.display = 'block';
   }
+
 
   // MODAL FORM SUBMIT
   async function submitModal() {
