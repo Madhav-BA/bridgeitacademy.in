@@ -700,7 +700,7 @@
       <div class="countdown-bar">
         <div>
           <div class="countdown-label">Next batch starting in</div>
-          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:3px;">Weekend batch · 10AM–12PM IST</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:3px;" id="cd-batch-sub">Monday batch · 10AM IST</div>
         </div>
         <div class="countdown-units">
           <div class="countdown-unit"><span class="countdown-num" id="cd-days">05</span><span class="countdown-tag">Days</span></div>
@@ -1587,22 +1587,37 @@
 <script>
 
   // ── COUNTDOWN TIMER ──
+  // New batches start every Monday, morning (10:00 AM IST) and evening (6:00 PM IST).
+  // Change MORNING_HOUR / EVENING_HOUR below if the actual batch times differ.
   (function() {
-    // Set next batch date — change this to your actual batch start date
-    const batchDate = new Date();
-    batchDate.setDate(batchDate.getDate() + 5);
-    batchDate.setHours(10, 0, 0, 0);
+    const MORNING_HOUR = 10; // 10:00 AM IST
+    const EVENING_HOUR = 18; // 6:00 PM IST
+
+    // Finds the next upcoming Monday at the given hour, starting the search from `from`.
+    function nextMondayAt(hour, from) {
+      const d = new Date(from);
+      d.setHours(hour, 0, 0, 0);
+      // getDay(): Sunday=0, Monday=1 ... Saturday=6
+      let dayDiff = (1 - d.getDay() + 7) % 7;
+      if (dayDiff === 0 && d <= from) dayDiff = 7; // today is Monday but this slot already passed
+      d.setDate(d.getDate() + dayDiff);
+      return d;
+    }
+
+    function getNextBatch() {
+      const now = new Date();
+      const candidates = [
+        { date: nextMondayAt(MORNING_HOUR, now), label: 'Morning', time: '10AM IST' },
+        { date: nextMondayAt(EVENING_HOUR, now), label: 'Evening', time: '6PM IST' },
+      ].sort((a, b) => a.date - b.date);
+      return candidates[0];
+    }
 
     function updateCountdown() {
-      const now  = new Date();
-      const diff = batchDate - now;
-      if (diff <= 0) {
-        document.getElementById('cd-days').textContent = '00';
-        document.getElementById('cd-hrs').textContent  = '00';
-        document.getElementById('cd-min').textContent  = '00';
-        document.getElementById('cd-sec').textContent  = '00';
-        return;
-      }
+      const now   = new Date();
+      const batch = getNextBatch();
+      const diff  = batch.date - now;
+
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
@@ -1611,6 +1626,9 @@
       document.getElementById('cd-hrs').textContent  = String(h).padStart(2,'0');
       document.getElementById('cd-min').textContent  = String(m).padStart(2,'0');
       document.getElementById('cd-sec').textContent  = String(s).padStart(2,'0');
+
+      const sub = document.getElementById('cd-batch-sub');
+      if (sub) sub.textContent = 'Monday ' + batch.label + ' batch · ' + batch.time;
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
@@ -1619,16 +1637,46 @@
   // ── SOCIAL PROOF POPUP ──
   (function() {
     const proofs = [
-      { name: 'Priya M., Hyderabad',    action: 'just registered for BA Demo',        color: '#fef6e4', text: '#D4891A', init: 'P' },
-      { name: 'Rahul K., Bengaluru',    action: 'enrolled in Scrum Master course',     color: '#e8f0fa', text: '#2D6A9F', init: 'R' },
-      { name: 'Sneha T., Chennai',      action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'S' },
-      { name: 'Arjun M., Hyderabad',    action: 'just registered for PM Demo',         color: '#fef6e4', text: '#D4891A', init: 'A' },
-      { name: 'Meera V., Mumbai',       action: 'enrolled in Business Analysis course',color: '#e8f0fa', text: '#2D6A9F', init: 'M' },
-      { name: 'Vikram P., Pune',        action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'V' },
-      { name: 'Deepika S., Delhi',      action: 'just registered for BA Demo',         color: '#fef6e4', text: '#D4891A', init: 'D' },
-      { name: 'Karthik N., Bengaluru',  action: 'enrolled in Scrum Master course',     color: '#e8f0fa', text: '#2D6A9F', init: 'K' },
-      { name: 'Lakshmi P., Hyderabad',  action: 'booked a Free Counselling session',   color: '#e8f8f0', text: '#27AE60', init: 'L' },
-      { name: 'Rohit S., Hyderabad',    action: 'just registered for PM Demo',         color: '#fef6e4', text: '#D4891A', init: 'R' },
+      { name: 'Priya M., Hyderabad',     action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'P' },
+      { name: 'Rahul K., Bengaluru',     action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'R' },
+      { name: 'Sneha T., Chennai',       action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'S' },
+      { name: 'Arjun M., Hyderabad',     action: 'just registered for PM Demo',          color: '#fef6e4', text: '#D4891A', init: 'A' },
+      { name: 'Meera V., Mumbai',        action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'M' },
+      { name: 'Vikram P., Pune',         action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'V' },
+      { name: 'Deepika S., Delhi',       action: 'just registered for BA Demo',          color: '#fef6e4', text: '#D4891A', init: 'D' },
+      { name: 'Karthik N., Bengaluru',   action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'K' },
+      { name: 'Lakshmi P., Hyderabad',   action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'L' },
+      { name: 'Rohit S., Hyderabad',     action: 'just registered for PM Demo',          color: '#fef6e4', text: '#D4891A', init: 'R' },
+      { name: 'Ananya R., Kolkata',      action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'A' },
+      { name: 'Suresh B., Ahmedabad',    action: 'just registered for BA Demo',          color: '#fef6e4', text: '#D4891A', init: 'S' },
+      { name: 'Neha J., Noida',          action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'N' },
+      { name: 'Manoj T., Gurugram',      action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'M' },
+      { name: 'Divya K., Kochi',         action: 'just registered for Scrum Master Demo',color: '#fef6e4', text: '#D4891A', init: 'D' },
+      { name: 'Abhishek R., Coimbatore', action: 'enrolled in Project Management course',color: '#e8f0fa', text: '#2D6A9F', init: 'A' },
+      { name: 'Pooja S., Nagpur',        action: 'just registered for BA Demo',          color: '#fef6e4', text: '#D4891A', init: 'P' },
+      { name: 'Sandeep V., Indore',      action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'S' },
+      { name: 'Ritu M., Jaipur',         action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'R' },
+      { name: 'Harish P., Lucknow',      action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'H' },
+      { name: 'Swathi N., Chandigarh',   action: 'just registered for PM Demo',          color: '#fef6e4', text: '#D4891A', init: 'S' },
+      { name: 'Gaurav D., Visakhapatnam',action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'G' },
+      { name: 'Anjali T., Bhopal',       action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'A' },
+      { name: 'Naveen K., Surat',        action: 'just registered for BA Demo',          color: '#fef6e4', text: '#D4891A', init: 'N' },
+      { name: 'Kavya R., Hyderabad',     action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'K' },
+      { name: 'Siddharth J., Bengaluru', action: 'enrolled in Project Management course',color: '#e8f0fa', text: '#2D6A9F', init: 'S' },
+      { name: 'Priyanka B., Mumbai',     action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'P' },
+      { name: 'Ramesh V., Chennai',      action: 'just registered for Scrum Master Demo',color: '#fef6e4', text: '#D4891A', init: 'R' },
+      { name: 'Shalini P., Pune',        action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'S' },
+      { name: 'Vivek S., Delhi',         action: 'just registered for PM Demo',          color: '#fef6e4', text: '#D4891A', init: 'V' },
+      { name: 'Aishwarya M., Kolkata',   action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'A' },
+      { name: 'Nikhil T., Ahmedabad',    action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'N' },
+      { name: 'Swetha D., Hyderabad',    action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'S' },
+      { name: 'Rajesh K., Noida',        action: 'just registered for BA Demo',          color: '#fef6e4', text: '#D4891A', init: 'R' },
+      { name: 'Bhavana R., Gurugram',    action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'B' },
+      { name: 'Chetan M., Kochi',        action: 'enrolled in Project Management course',color: '#e8f0fa', text: '#2D6A9F', init: 'C' },
+      { name: 'Yamini S., Coimbatore',   action: 'just registered for Scrum Master Demo',color: '#fef6e4', text: '#D4891A', init: 'Y' },
+      { name: 'Prakash N., Nagpur',      action: 'enrolled in Business Analysis course', color: '#e8f0fa', text: '#2D6A9F', init: 'P' },
+      { name: 'Radhika V., Indore',      action: 'booked a Free Counselling session',    color: '#e8f8f0', text: '#27AE60', init: 'R' },
+      { name: 'Sanjay T., Jaipur',       action: 'enrolled in Scrum Master course',      color: '#e8f0fa', text: '#2D6A9F', init: 'S' },
     ];
 
     const times = ['Just now', '2 min ago', '5 min ago', '8 min ago', '12 min ago'];
